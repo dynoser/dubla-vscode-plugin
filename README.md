@@ -1,4 +1,8 @@
-# Dubla encode/decode
+# Dubla
+
+Encode and Decode. These menu items open by right-clicking on the selection:
+
+![Menu Encode / Decode](https://raw.githubusercontent.com/dynoser/dubla-vscode-plugin/main/images/dubla-demo.gif)
 
 `Ðubla` encoding scheme allows to almost halve the number of characters that the text takes up.
 
