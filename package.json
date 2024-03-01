@@ -1,0 +1,258 @@
+{
+  "name": "dubla",
+  "displayName": "dubla",
+  "description": "Dubla encode/decode plugin. Code highlighting. base1024, base64alt, base64, base85, alt85, alt128 and hex convert",
+  "version": "1.1.1",
+  "publisher": "dynoser",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dynoser/dubla-vscode-plugin"
+  },
+  "engines": {
+    "vscode": "^1.65.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Other"
+  ],
+  "icon": "images/icon.png",
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguage:dubla",
+    "onWebviewPanel:dubla"
+  ],
+  "main": "./out/extension.js",
+  "browser": "./out/web/extension.js",
+  "web": "out/web/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "dubla",
+        "extensions": [
+          ".dubla",
+          ".dbl"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dubla",
+        "scopeName": "source.dubla",
+        "path": "./syntaxes/dubla.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "dubla.encode",
+        "title": "Encode text to Dubla"
+      },
+      {
+        "command": "dubla.decode",
+        "title": "Decode text from Dubla"
+      },
+      {
+        "command": "dubla.toAltBase64",
+        "title": "Encode text to AltBase64"
+      },
+      {
+        "command": "dubla.fromAltBase64",
+        "title": "Decode text from AltBase64"
+      },
+      {
+        "command": "dubla.toBase64",
+        "title": "Encode text to Base64 (Raw)"
+      },
+      {
+        "command": "dubla.fromBase64",
+        "title": "Decode text from Base64"
+      },
+      {
+        "command": "dubla.toHex",
+        "title": "Encode text to HEX"
+      },
+      {
+        "command": "dubla.fromHex",
+        "title": "Decode HEX to text"
+      },
+      {
+        "command": "dubla.toAlt85",
+        "title": "Encode text to Alt85"
+      },
+      {
+        "command": "dubla.fromAlt85",
+        "title": "Decode Alt85 to text"
+      },
+      {
+        "command": "dubla.fromBase85",
+        "title": "Decode Base85 to text"
+      },
+      {
+        "command": "dubla.toBase85",
+        "title": "Encode text to Base85"
+      },
+      {
+        "command": "dubla.toAlt128",
+        "title": "Encode text to Alt128"
+      },
+      {
+        "command": "dubla.fromAlt128",
+        "title": "Decode Alt128 to text"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "dubla.convertMenu",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.encode",
+          "when": "editorTextFocus && editorHasSelection && dubla.canEncode",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.decode",
+          "when": "editorTextFocus && editorHasSelection && dubla.canDecode",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.toAltBase64",
+          "when": "editorTextFocus && editorHasSelection && dubla.canEncodeAlt64",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromAltBase64",
+          "when": "editorTextFocus && editorHasSelection && dubla.selExactlyA64",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromAlt85",
+          "when": "editorTextFocus && editorHasSelection && dubla.selExactly85",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromBase64",
+          "when": "editorTextFocus && editorHasSelection && dubla.selMaybeB64",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.toBase64",
+          "when": "editorTextFocus && editorHasSelection && dubla.canEncodeBase64",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromHex",
+          "when": "editorTextFocus && editorHasSelection && dubla.selMaybeHex",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.toAlt85",
+          "when": "editorTextFocus && editorHasSelection && dubla.canEncodeAlt85",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromAlt85",
+          "when": "editorTextFocus && editorHasSelection && dubla.selExactlyAlt85",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromBase85",
+          "when": "editorTextFocus && editorHasSelection && dubla.selExactlyBase85",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.toAlt128",
+          "when": "editorTextFocus && editorHasSelection && dubla.canEncode128",
+          "group": "z_commands"
+        },
+        {
+          "command": "dubla.fromAlt128",
+          "when": "editorTextFocus && editorHasSelection && dubla.selExactly128",
+          "group": "z_commands"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "submenu": "dubla.convertMenu",
+          "group": "z_commands"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "dubla.convertMenu",
+        "label": "Convert Encoding",
+        "icon": "images/icon.png"
+      }
+    ],
+    "configuration": {
+      "title": "Dubla",
+      "properties": {
+        "dubla.splitWidth": {
+          "type": "number",
+          "default": 80,
+          "markdownDescription": "Dubla encoder will split result by this string-wide (0 = do not split)"
+        },
+        "dubla.canUseDeflate": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Dubla and other Alt-encoders can use Deflate (gzip) compression"
+        },
+        "dubla.menuEncodeEnabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Add item '`Encode text to Dubla`' to the selection menu"
+        },
+        "dubla.addPrefixes": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Dubla encoder will add `¨` prefix and `·` suffix to encoded data"
+        },
+        "dubla.menuEncodeAlt64Enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Add item '`Encode text to AltBase64`' to the selection menu"
+        },
+        "dubla.menuEncodeBase64Enabled": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Add item '`Encode text to Base64 (Raw)`' to the selection menu"
+        },
+        "dubla.menuEncodeAlt85Enabled": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Add item '`Encode text to Alt85`' to the selection menu"
+        },
+        "dubla.menuEncodeAlt128Enabled": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Add item '`Encode text to Alt128`' to the selection menu"
+        },
+        "dubla.urlModeBase64": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Base64 and AltBase64 encoders will use URL-safe charset (replace `+` to `-`, replace `/` to `_`)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "@types/node": "^14.18.63",
+    "@types/pako": "^2.0.3",
+    "@types/vscode": "^1.65.0",
+    "@types/webpack-env": "^1.16.0",
+    "source-map-loader": "^4.0.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.3.3",
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "pako": "^2.1.0"
+  }
+}
